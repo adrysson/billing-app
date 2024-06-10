@@ -26,6 +26,10 @@ const UploadedFilesViewer = () => {
     };
 
     fetchData();
+
+    const intervalId = setInterval(fetchData, 5000);
+
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -34,23 +38,23 @@ const UploadedFilesViewer = () => {
       {error && <p>Ocorreu um erro: {error}</p>}
       {data && (
         <Table>
-            <TableCaption>Arquivos Carregados</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Nome</TableCell>
-                <TableCell>Data de envio</TableCell>
+          <TableCaption>Arquivos Carregados</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Nome</TableCell>
+              <TableCell>Data de envio</TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.data.map((file: any) => (
+              <TableRow key={file.id}>
+                <TableCell>{file.id}</TableCell>
+                <TableCell>{file.name}</TableCell>
+                <TableCell>{file.created_at}</TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.data.map((file: any) => (
-                <TableRow key={file.id}>
-                  <TableCell>{file.id}</TableCell>
-                  <TableCell>{file.name}</TableCell>
-                  <TableCell>{file.created_at}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
+            ))}
+          </TableBody>
         </Table>
       )}
     </div>
