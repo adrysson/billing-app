@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./table";
 
 const UploadedFilesViewer = () => {
   const [data, setData] = useState<any>(null);
@@ -32,33 +33,25 @@ const UploadedFilesViewer = () => {
       {isLoading && <p>Carregando...</p>}
       {error && <p>Ocorreu um erro: {error}</p>}
       {data && (
-        <div>
-          <h2>Arquivos Carregados</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Caminho Real</th>
-                <th>Status</th>
-                <th>Criado em</th>
-                <th>Atualizado em</th>
-              </tr>
-            </thead>
-            <tbody>
+        <Table>
+            <TableCaption>Arquivos Carregados</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell>Data de envio</TableCell>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {data.data.map((file: any) => (
-                <tr key={file.id}>
-                  <td>{file.id}</td>
-                  <td>{file.name}</td>
-                  <td>{file.real_path}</td>
-                  <td>{file.status}</td>
-                  <td>{file.created_at}</td>
-                  <td>{file.updated_at}</td>
-                </tr>
+                <TableRow key={file.id}>
+                  <TableCell>{file.id}</TableCell>
+                  <TableCell>{file.name}</TableCell>
+                  <TableCell>{file.created_at}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+        </Table>
       )}
     </div>
   );
